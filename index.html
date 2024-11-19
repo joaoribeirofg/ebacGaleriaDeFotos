@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>jQuery</title>
+    <link rel="stylesheet" href="./main.css">
+    <title>jQuery</title>
+</head>
+<body>
+    <header>
+        <h1>Galeria de fotos</h1>
+        <button type="button">Nova Imagem + </button>
+    </header>
+
+    <form>
+        <h2>Inserir nova imagem</h2>
+        <input type="url" id="endereco-imagem-nova" required placeholder="URL da imagem">
+        <button type="submit"> Adicionar + </button>
+        <button type="reset" id="botao-cancelar"> Cancelar </button>
+    </form>
+
+    <ul>
+        <li>
+            <img src="./images/foto1.jpg"/>
+            <div class="overlay-imagem-link">
+                <a href="./images/foto1.jpg" target="_blank">
+                    Ver imagem em tamanho real
+                </a>
+            </div>
+        </li>
+
+        <li>
+            <img src="./images/foto2.jpg"/>
+            <div class="overlay-imagem-link">
+                <a href="./images/foto2.jpg" target="_blank">
+                    Ver imagem em tamanho real
+                </a>
+            </div>
+        </li>
+
+        <li>
+            <img src="./images/foto3.jpg"/>
+            <div class="overlay-imagem-link">
+                <a href="./images/foto3.jpg" target="_blank">
+                    Ver imagem em tamanho real
+                </a>
+            </div>
+        </li>
+    </ul>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+    
+            $('header button').click(function(){
+                alert('Expandir Formulário'); 
+                $('form').slideDown(); 
+            });
+    
+            $('#botao-cancelar').click(function(){
+                $('form').slideUp(); 
+            });
+    
+            $('form').on('submit', function(e) {
+                e.preventDefault();     
+                const enderecoImagemNova = $('#endereco-imagem-nova').val(); // Recebe o valor do campo de texto onde o usuário insere o link da nova imagem
+                const novoItem = $('<li style="display: none"></li>');     // Cria um novo elemento <li> com estilo inicial de display: none (para ocultá-lo inicialmente)
+    
+                $(`<img src="${enderecoImagemNova}" />`).appendTo(novoItem);  // Adiciona uma imagem ao novo <li> usando o endereço fornecido pelo usuário
+
+                // Adiciona uma camada de overlay com um link que permite ver a imagem em tamanho real
+                $(` 
+                <div class="overlay-imagem-link">
+                    <a href="${enderecoImagemNova}" target="_blank">
+                        Ver imagem em tamanho real
+                    </a>
+                </div>
+                `).appendTo(novoItem);
+    
+                $(novoItem).appendTo('ul'); // Adiciona o <li> criado à lista <ul> na página
+                $(novoItem).fadeIn(500); // Fade de 5ms ao passar o mouse
+    
+                $('#endereco-imagem-nova').val(''); // Limpa o campo de entrada de texto
+
+            });
+        });
+    </script>
+    
+
+    
+</body>
+</html>
